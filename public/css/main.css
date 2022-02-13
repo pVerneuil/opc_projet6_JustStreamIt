@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+body {
+  background-color: black;
+}
+
+a {
+  text-decoration: none;
+}
+
+.hero {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.bestMovie {
+  width: 98%;
+  position: relative;
+  height: 400px;
+}
+
+.bestMovie__textWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  width: 50%;
+  top: 23vh;
+  color: white;
+  margin-left: 12px;
+  background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.986)), to(transparent));
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.986), transparent);
+}
+
+.bestMovie__title {
+  font-size: 3vh;
+}
+
+.bestMovie__summary {
+  font-size: 1.5vh;
+}
+
+.bestMovie__btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  color: white;
+  width: 130px;
+  height: 30px;
+  background-color: #707070;
+  border-radius: 3px;
+}
+
+.bestMovie__btn img {
+  height: 20px;
+}
+
+.bestMovie__image {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+/*# sourceMappingURL=main.css.map */
