@@ -8,8 +8,8 @@ body {
   background-color: black;
 }
 
-a {
-  text-decoration: none;
+ul {
+  list-style-type: none;
 }
 
 .hero {
@@ -46,13 +46,16 @@ a {
 
 .bestMovie__title {
   font-size: 3vh;
+  margin: 12px 0px;
 }
 
 .bestMovie__summary {
+  margin: 12px 0px;
   font-size: 1.5vh;
 }
 
 .bestMovie__btn {
+  margin: 12px 0px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -63,10 +66,10 @@ a {
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
   color: white;
-  width: 130px;
-  height: 30px;
-  background-color: #707070;
-  border-radius: 3px;
+  width: 110px;
+  height: 35px;
+  background-color: rgba(112, 112, 112, 0.432);
+  border-radius: 4px;
 }
 
 .bestMovie__btn img {
@@ -75,6 +78,42 @@ a {
 
 .bestMovie__image {
   width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 3px;
+}
+
+.carousel {
+  margin-top: 3%;
+  color: white;
+}
+
+.carousel__slider {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.carousel__sliderMovies {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.carousel__sliderMovies li {
+  height: 19vw;
+}
+
+.carousel__sliderMovies li img {
+  border-radius: 5px;
+  margin: 1px;
+  width: 19vw;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;

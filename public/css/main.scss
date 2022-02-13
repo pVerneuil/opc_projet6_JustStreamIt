@@ -6,9 +6,10 @@
 body{
     background-color: black;
 }
-a{
-    text-decoration: none;
+ul{
+    list-style-type: none;
 }
+
 .hero{
     display: flex;
     justify-content: center;
@@ -29,24 +30,52 @@ a{
     }
     &__title{  
         font-size: 3vh;
+        margin: 12px 0px;
     }
     &__summary{
+        margin: 12px 0px;
         font-size: 1.5vh;
     }
     &__btn{
+        margin: 12px 0px;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
         color: white;
-        width: 130px;
-        height: 30px;
-        background-color: rgb(112, 112, 112);
-        border-radius: 3px;
+        width: 110px;
+        height: 35px;
+        background-color: rgba(112, 112, 112, 0.432);
+        border-radius: 4px;
         img{ 
             height: 20px;
         }
     }
     &__image{
-        width:100%;height:100%;object-fit:cover;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        border-radius: 3px;
+    }
+}
+.carousel{
+    margin-top: 3%;
+    color: rgb(255, 255, 255);
+    &__slider{
+        display: flex;
+        justify-content: center;
+    }
+    &__sliderMovies{
+        display: flex;
+        justify-content: space-around;
+        li{
+            height: 19vw;
+            img{
+                border-radius: 5px;
+                margin: 1px;
+                width: 19vw;
+                height: 100%;
+                object-fit:cover;
+            }
+        }
     }
 }

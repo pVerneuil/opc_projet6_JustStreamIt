@@ -1,6 +1,5 @@
-# New Project
+# Just Stream IT
 
-> ✨ Bootstrapped with Create Snowpack App (CSA).
 
 ## Available Scripts
 
