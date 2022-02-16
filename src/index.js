@@ -9,7 +9,7 @@ class Carousel {
      */
 
     constructor(element, options = {}) {
-        this.element = element 
+        this.element = element
         this.options = Object.assign({}, {
             slidesToScroll: 2,
             slideVisible: 1,
@@ -33,81 +33,80 @@ class Carousel {
         this.createNavigation()
         this.onWindowResize()
         window.addEventListener('resize', this.onWindowResize.bind(this))
+    }
+    createNavigation() {
+        let nextButton = createDivWithClass('carousel__next');
+        let prevButton = createDivWithClass('carousel__prev');
+        this.root.appendChild(nextButton);
+        this.root.appendChild(prevButton);
+        nextButton.addEventListener('click', this.next.bind(this));
+        prevButton.addEventListener('click', this.prev.bind(this));
+    }
 
+    next() {
+        this.gotoItem(this.currentItem + this.slideToScroll)
+    }
+
+    prev() {
+        this.gotoItem(this.currentItem - this.slideToScroll)
+    }
+
+    /**
+     * move the slider to target element
+     * @param {number} index
+     */
+    gotoItem(index) {
+        if (index < 0) {
+            index = this.items.length - this.options.slideVisible
+        } else if (index >= this.items.length) {
+            index = 0
+        }
+        let translateX = index * -100 / this.items.length
+        this.container.style.transform = 'translate3d(' + translateX + '%, 0, 0)'
+        this.currentItem = index
     }
 
 
-        createNavigation() {
-            let nextButton = createDivWithClass('carousel__next');
-            let prevButton = createDivWithClass('carousel__prev');
-            this.root.appendChild(nextButton);
-            this.root.appendChild(prevButton);
-            nextButton.addEventListener('click', this.next.bind(this) );
-            prevButton.addEventListener('click', this.prev.bind(this) );
+    setStyle() {
+        let ratio = this.items.length / this.slideVisible
+        this.container.style.width = (ratio * 100) + "%"
+        this.items.forEach(item => item.style.width = (100 / this.slideVisible / ratio) + "%")
+    }
+    onWindowResize() {
+        let mobile = window.innerWidth < 800
+        if (mobile !== this.isMobile) {
+            this.isMobile = mobile
+            this.setStyle()
         }
+        let tablet = window.innerWidth < 1300
+        if (tablet !== this.isTablet) {
+            this.isTablet = tablet
+            this.setStyle()
+        }
+    }
 
-        next(){
-            this.gotoItem(this.currentItem + this.slideToScroll)
+    get slideToScroll() {
+        if (this.isMobile) {
+            return 2
         }
-
-        prev(){
-            this.gotoItem(this.currentItem - this.slideToScroll)
+        if (this.isTablet) {
+            return 4
         }
-
-        /**
-         * move the slider to target element
-         * @param {number} index
-         */
-        gotoItem (index) {
-            if (index <0){
-                index = this.items.length - this.options.slideVisible
-            } else if (index >= this.items.length) {
-                index = 0
-            }
-            let translateX = index * -100 / this.items.length
-            this.container.style.transform = 'translate3d(' + translateX + '%, 0, 0)'
-            this.currentItem = index
+        else {
+            return this.options.slideToScroll
         }
-
-        
-        setStyle () {
-            let ratio = this.items.length / this.slideVisible
-            this.container.style.width = (ratio * 100) + "%"
-            this.items.forEach(item => item.style.width = (100 / this.slideVisible/ratio)+ "%")
+    }
+    get slideVisible() {
+        if (this.isMobile) {
+            return 2
         }
-        onWindowResize(){
-            let mobile = window.innerWidth <800
-            if(mobile !== this.isMobile){
-                this.isMobile = mobile
-                this.setStyle()
-            }
-            let tablet = window.innerWidth <1300
-            if(tablet !== this.isTablet){
-                this.isTablet = tablet
-                this.setStyle()
-            }
+        if (this.isTablet) {
+            return 4
         }
-
-        get slideToScroll () {
-            if (this.isMobile) {
-                return 2
-            }
-            if (this.isTablet){
-                return 4
-            }
-            else {
-                return this.options.slideToScroll}
+        else {
+            return this.options.slideVisible
         }
-        get slideVisible () {
-            if (this.isMobile) {
-                return 2
-            }
-            if (this.isTablet){
-                return 4
-            }
-            else {
-                return this.options.slideVisible}
-        }
+    }
 
 }
 
@@ -120,7 +119,7 @@ const urlMoviesRankedByImdbScore2 = 'http://localhost:8000/api/v1/titles/?page=2
  * @param {String} className 
  * @returns {HTMLElement}
  */
-const createDivWithClass =(className) =>{
+const createDivWithClass = (className) => {
     let div = document.createElement('div')
     div.className = (className)
     return div
@@ -181,25 +180,23 @@ const generateHero = async function (url) {
 
 
 //TODO add target carousele as a parameter later
-const fillSlider = async function (urls,target_id) {
+const fillSlider = async function (urls, target_id) {
     let response = await fetchMany(urls)
     let listMoviesSlider = document.getElementById(target_id)
     for (let i = 0; i < response.length; i++) {
         for (let y = 0; y < response[i].results.length; y++) {
-            const listElement = document.createElement("div")
-            listElement.className = "item"
+
+            const listElement = createDivWithClass('item')
             listElement.setAttribute('id', response[i].results[y].id)
 
-            const item__image = document.createElement("div")
-            item__image.className = "item__image"
+            const item__image = createDivWithClass('item__image')
 
             const image = document.createElement("img")
             image.setAttribute('src', response[i].results[y].image_url)
             item__image.appendChild(image)
             listElement.appendChild(item__image)
 
-            const item__title = document.createElement("div")
-            item__title.className = "item__title"
+            const item__title = createDivWithClass('item__title')
             item__title.innerHTML = response[i].results[y].title
             listElement.appendChild(item__title)
             listMoviesSlider.appendChild(listElement)
@@ -208,14 +205,49 @@ const fillSlider = async function (urls,target_id) {
 }
 
 
+async function displayModals() {
 
-document.addEventListener('DOMContentLoaded', function () {
-    generateHero(urlMoviesRankedByImdbScore)
-    fillSlider(generateUrls(1, 14),"carousel1").then(() => 
-    new Carousel(document.querySelector('#carousel1'), {
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+}
+function instanciateCarousel(carousel){
+    new Carousel(document.querySelector(carousel), {
         slideVisible: 7,
         slideToScroll: 7
     })
-    )
-})
 
+}
+
+async function main(){{
+    generateHero(urlMoviesRankedByImdbScore)
+    await fillSlider(generateUrls(1, 14),"carousel1")
+    await instanciateCarousel('#carousel1')
+}
+    displayModals()
+}
+
+
+window.addEventListener('DOMContentLoaded', main)
