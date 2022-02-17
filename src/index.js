@@ -16,7 +16,7 @@ class Carousel {
         }, options);
         let children = [].slice.call(element.children)
         this.isMobile = false
-        this.isTablet = true
+        this.isTablet = false
         this.currentItem = 0
         this.root = createDivWithClass('carousel')
         this.container = createDivWithClass('carousel__container')
@@ -99,6 +99,7 @@ class Carousel {
     get slideVisible() {
         if (this.isMobile) {
             return 2
+            
         }
         if (this.isTablet) {
             return 4
@@ -109,10 +110,6 @@ class Carousel {
     }
 
 }
-
-
-const urlMoviesRankedByImdbScore = 'http://localhost:8000/api/v1/titles/?page=1&sort_by=-imdb_score'
-const urlMoviesRankedByImdbScore2 = 'http://localhost:8000/api/v1/titles/?page=2&genre=Action&sort_by=-imdb_score'
 
 /**
  * Create a div and set class attribute.
@@ -152,34 +149,26 @@ const fetchMany = async (urls) => {
     }
     return data;
 };
-
-
+const fetchbyId = async (id) => {
+    const url = `http://localhost:8000/api/v1/titles/${id} `
+    const res = await fetchMany([url])
+    const data = res[0]
+    return data
+}
 const generateHero = async function (url) {
-    let bestMovieUrl;
-    let moviesListRanked;
-    try {
-        const response = await axios.get(url);
-        moviesListRanked = await response.data;
-        // console.log(moviesListRanked);
-        bestMovieUrl = moviesListRanked.results[0].url;
-    } catch (error) {
-        console.error(error);
-    }
-    let bestMovie;
-    try {
-        const response2 = await axios.get(bestMovieUrl);
-        bestMovie = await response2.data;
-    } catch (error) {
-        console.error(error);
-    }
 
-    document.getElementsByClassName('bestMovie__image')[0].setAttribute('src', bestMovie.image_url);
+    let response = await fetchMany([generateUrls(1, 1)])
+    const bestMovieId = response[0].results[0].id
+    const bestMovie = await fetchbyId(bestMovieId)
+    const bestMovie_image = document.getElementsByClassName('bestMovie__image')[0]
+    bestMovie_image.setAttribute('src', bestMovie.image_url);
+    bestMovie_image.setAttribute('id', bestMovie.id)
     document.getElementsByClassName('bestMovie__title')[0].innerHTML = bestMovie.title;
     document.getElementsByClassName('bestMovie__summary')[0].innerHTML = bestMovie.description;
 };
 
 
-//TODO add target carousele as a parameter later
+
 const fillSlider = async function (urls, target_id) {
     let response = await fetchMany(urls)
     let listMoviesSlider = document.getElementById(target_id)
@@ -193,6 +182,7 @@ const fillSlider = async function (urls, target_id) {
 
             const image = document.createElement("img")
             image.setAttribute('src', response[i].results[y].image_url)
+            item__image.setAttribute('id', response[i].results[y].id)
             item__image.appendChild(image)
             listElement.appendChild(item__image)
 
@@ -204,36 +194,7 @@ const fillSlider = async function (urls, target_id) {
     }
 }
 
-
-async function displayModals() {
-
-// Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-}
-function instanciateCarousel(carousel){
+function instanciateCarousel(carousel) {
     new Carousel(document.querySelector(carousel), {
         slideVisible: 7,
         slideToScroll: 7
@@ -241,11 +202,88 @@ function instanciateCarousel(carousel){
 
 }
 
-async function main(){{
-    generateHero(urlMoviesRankedByImdbScore)
-    await fillSlider(generateUrls(1, 14),"carousel1")
-    await instanciateCarousel('#carousel1')
+/**
+ * 
+ * @param {number} id of the movie
+ */
+async function fillModal(id) {
+    //Fecting the data
+    const data = await fetchbyId(id)
+    //removing the content of the modal
+    const modalDiv = document.getElementById("modalContent__data");
+    modalDiv.innerHTML = ''
+
+    const html_modal = `
+    <div class="top">
+    <div class="top__left">
+        <h5>${data.title}</h5>
+        <p>Sortie: <span>${data.date_published}</span></p>
+        <span class="desc">
+            ${data.description}
+        </span>
+    </div>
+    <div class="top_right">
+        <img src="${data.image_url}" alt="affiche ${data.title}">
+    </div>
+</div>
+<div class="bottom">
+    <div class="bottom_left">
+        <p>Genres: <span>${data.genres} </span></p>
+        <p>Réalisateur: <span>${data.directors} </span></p>
+        <p>Acteurs: <span>${data.actors} </span></p>
+    </div>
+    <div class="bottom_right">
+        <p><span>${data.duration} </span>min; <span>${data.imdb_score} </span> sur Imdb;</p>
+        <p>Rated: <span>${data.Rated} </span></p>
+        <p>Pay(s) : <span>${data.countries} </span></p>
+        <p>Box office: <span>${data.worldwide_gross_income} </span></p>
+    </div>
+</div>
+    `
+    modalDiv.innerHTML = html_modal
+
+
+
 }
+
+
+async function displayModals() {
+
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+
+    const allImages = document.getElementsByClassName('item__image')
+    for (let image of allImages) {
+        image.addEventListener('click', async () => {
+            const id = image.id
+
+            fillModal(id)
+            modal.style.display = "block";
+        });
+    }
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+
+
+async function main() {
+    {
+        generateHero()
+        await fillSlider(generateUrls(1, 14), "carousel1")
+        await instanciateCarousel('#carousel1')
+        await fillSlider(generateUrls(1, 14,'Adventure'), "carousel2")
+        await instanciateCarousel('#carousel2')
+        await fillSlider(generateUrls(1, 14,'Sci-Fi'), "carousel3")
+        await instanciateCarousel('#carousel3')
+    }
     displayModals()
 }
 

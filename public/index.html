@@ -10,6 +10,17 @@
  
 <body>
   <div class="allPage">
+    <header>
+      <div class="logo">
+        <div class="logo__text">JusteStreamIt</div>
+      </div>
+      <div class="navbar">
+        <ul>
+          <li><a href="#">Acceuil</a> </li>
+          <li><a href="#">Catégories</a> </li>
+        </ul>
+      </div>
+    </header>
 
     <div class="hero">
       <div class="bestMovie">
@@ -17,12 +28,8 @@
         <h3 class="bestMovie__title">
           </h4>
           <div class="bestMovie__summary"></div>
-          <button href="#" class="bestMovie__btn">
-            <img src="images/icons8-info.svg" alt="Commencer" />
-            Plus d'Infos
-          </button>
         </div>
-        <img class="bestMovie__image" src="#" alt="meilleur film" alt="meilleur film" />
+        <img class="bestMovie__image item__image" src="#" alt="Meilleur film" />
       </div>
     </div>
     
@@ -30,23 +37,28 @@
       <h3 class="category">Films les mieux notés</h3>
       <div id="carousel1">
       </div>
+      <h3 class="category">Films d'Aventure</h3>
+      <div id="carousel2">
+      </div>
+      <h3 class="category">Science Fiction</h3>
+      <div id="carousel3">
+      </div>
     </div>
   </div>
-  <!-- Trigger/Open The Modal -->
-<button id="myBtn">Open Modal</button>
 
-<!-- The Modal -->
+
+  
 <div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
+  <div id="testModal" class="modal__container">
     <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
+    <div id="modalContent__data">
+      This shouldn't show up :s
+    </div>
   </div>
 
 </div>
-
   <script type="module" src="/dist/index.js"></script>
 </body>
 
 </html>
+
