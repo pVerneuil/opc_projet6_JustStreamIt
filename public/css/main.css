@@ -1,3 +1,6 @@
+/***********
+ * AllPage *
+ ***********/
 body, html {
   margin: 0;
   padding: 0;
@@ -15,6 +18,9 @@ body {
   padding: 1%;
 }
 
+/**********
+ * Header *
+ **********/
 header {
   background-color: black;
   color: white;
@@ -59,6 +65,9 @@ header .logo__text {
   font-weight: bolder;
 }
 
+/********
+ * Hero *
+ ********/
 .hero {
   margin: 0;
   display: -webkit-box;
@@ -110,6 +119,9 @@ header .logo__text {
   border-radius: 3px;
 }
 
+/************
+ * Carousel *
+ ************/
 .category {
   color: white;
   font-size: 2vw;
@@ -176,7 +188,9 @@ header .logo__text {
   display: table;
 }
 
-/* The Modal  */
+/*********
+ * Modal *
+ *********/
 .modal {
   display: none;
   position: fixed;
@@ -221,14 +235,13 @@ header .logo__text {
 }
 
 #modalContent__data h5 {
-  font-size: 4vw;
+  font-size: 3vw;
   margin: 0;
   padding: 0;
 }
 
 #modalContent__data .desc {
-  font-size: 2vw;
-  padding: 1vw;
+  font-size: 1.5vw;
 }
 
 #modalContent__data .top {
@@ -244,7 +257,7 @@ header .logo__text {
   padding-left: 50px;
 }
 
-#modalContent__data .bottom {
+.bottom {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -253,16 +266,8 @@ header .logo__text {
           justify-content: space-between;
 }
 
-#modalContent__data .bottom__right {
+.bottom__right {
   padding-left: 50px;
-  width: 40% !important;
-}
-
-#modalContent__data .bottom__left {
-  max-width: 50% !important;
-}
-
-#actors {
-  color: aqua;
+  min-width: 182px;
 }
 /*# sourceMappingURL=main.css.map */
