@@ -14,7 +14,6 @@ async function displayModals() {
     for (let image of allImages) {
         image.addEventListener('click', async () => {
             const id = image.id
-
             fillModal(id)
             modal.style.display = "block";
         });
