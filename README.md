@@ -3,11 +3,16 @@ This web site fetchs and displays data from a rest API, using vanilla JavaScript
 ## Getting Started
 1. Install and run the API : refer the ReadMe of [this repository](-https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR).
 
-2. Run the snowpack build tool: 
-        In your terminal go to the root of this repository, then run:
+2. Clone the repository
    
+        git clone https://github.com/pVerneuil/opc_projet6_JustStreamIt
+3. If needed install nodejs :https://nodejs.org/en/
 
-
+4. Run the snowpack build tool: 
+        Once the folder pulled from github
+        In your terminal go to the root of this repository, then run:
+        
+        npm install   
         npm start
 
 Runs the app in the development mode.
